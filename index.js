@@ -23,14 +23,17 @@ const users = [
   },
 ];
 
+//Home Page
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to Home Page");
 });
 
+//Get all users
 app.get("/users", (req, res) => {
   res.status(200).send(users);
 });
 
+//Get lowest salary user
 app.get("/users/lowest-salary", (request, response) => {
   const searchedUser = users.reduce(
     (acc, curr) => (curr.salary < acc.salary ? curr : acc),
@@ -39,6 +42,7 @@ app.get("/users/lowest-salary", (request, response) => {
   response.json(searchedUser);
 });
 
+//Get highest salary user
 app.get("/users/highest-salary", (request, response) => {
   const searchedUser = users.reduce(
     (acc, curr) => (curr.salary > acc.salary ? curr : acc),
@@ -47,11 +51,13 @@ app.get("/users/highest-salary", (request, response) => {
   response.json(searchedUser);
 });
 
+//Get country "Switzerland"
 app.get("/users/:country=switzerland", (request, response) => {
   const searchedUser = users.find((user) => user.country === "Switzerland");
   response.json(JSON.stringify(searchedUser));
 });
 
+//Create a new user
 app.post("/users", (request, response) => {
   const aUser = request.body;
   aUser.id = shortUUID.generate();
